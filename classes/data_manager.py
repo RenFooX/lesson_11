@@ -1,7 +1,5 @@
-import logging
 import json
 from classes.exeptions import DataSourceBrokenEx
-logger = logging.getLogger("basic")
 
 
 class DataManager:
@@ -15,9 +13,7 @@ class DataManager:
             with open(self.path, 'r', encoding='utf-8') as file:
                 data = json.load(file)
         except (FileNotFoundError, json.JSONDecodeError):
-            logger.info("Ошибка при загрузке .json файла")
-            raise DataSourceBrokenEx("Файл с данными поврежден")
-
+            raise DataSourceBrokenEx("The data file is corrupted")
         return data
 
     def save_data(self, data):

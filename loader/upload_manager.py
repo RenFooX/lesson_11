@@ -24,7 +24,6 @@ class UploadManager:
                 return filename_to_save
             attemps += 1
             if attemps > LIMITS_ATTEMPS_NAME:
-                logger.info(f"Ошибка при загрузке изображения, лимит имен исчерпан")
                 raise OutOfFreeNamesError("No free name for save files")
 
     def is_file_type_valid(self, file_type):
@@ -41,7 +40,6 @@ class UploadManager:
 
         # Проверка формата изображения
         if not self.is_file_type_valid(file_type):
-            logger.info("Ошибка при загрузке изображения FormatNotSupported")
             raise PictureFormatNotSupported(f"Формат {file_type}, не поддерживается")
 
         # Генерация имени для изображения
@@ -52,7 +50,5 @@ class UploadManager:
         try:
             picture.save(os.path.join(folder, filename_to_save))
         except FileNotFoundError:
-            logger.info(f"Ошибка при загрузке изображения, лимит имен исчерпан")
             raise PictureNotLoadedError(f"{folder}, {filename_to_save}")
-
         return filename_to_save

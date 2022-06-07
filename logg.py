@@ -3,8 +3,8 @@ import logging
 
 def create_logger():
 
-    logger = logging.getLogger("basic")
-    logger.setLevel("DEBUG")
+    logger = logging.getLogger('basic')
+    logger.setLevel('DEBUG')
 
     console_hangler = logging.StreamHandler()
     file_hangler = logging.FileHandler("logs/basic.txt")

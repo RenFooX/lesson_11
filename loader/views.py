@@ -1,11 +1,10 @@
 import logging
 from flask import Blueprint, render_template, request, current_app
 from classes.data_manager import DataManager
-from .exeptions import OutOfFreeNamesError, PictureNotLoadedError
-from .upload_manager import UploadManager
+from loader.exeptions import OutOfFreeNamesError, PictureNotLoadedError
+from loader.upload_manager import UploadManager
 
 loader_blueprint = Blueprint('loader_blueprint', __name__, template_folder='templates')
-
 logger = logging.getLogger("basic")
 
 
@@ -42,11 +41,13 @@ def page_by_created_new_post():
 
 @loader_blueprint.errorhandler(OutOfFreeNamesError)
 def error_for_save_to_names(e):
-    return "Лимит свободных имен исчерпан для сохранения изображений, обратитесь администратору сайта"
+    logger.error("Достигнут лимит генерации имен изображений")
+    return "Лимит для сохранения изображений исчерпан , обратитесь администратору сайта" \
+           "или попробуйте позже"
 
 
 @loader_blueprint.errorhandler(PictureNotLoadedError)
 def picture_not_loaded_error(e):
+    logger.error("Ошибка при загрузке изображения")
     return "Ошибка загрузки изображения," \
             "попробуйте еще раз или обратитесь к администратору"
-

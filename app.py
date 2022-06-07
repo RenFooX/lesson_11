@@ -13,16 +13,14 @@ app.config["POST_PATH"] = "data/posts.json"
 app.config["UPLOAD_FOLDER"] = "uploads/images"
 
 logg.create_logger()
-logger = logging.getLogger("basic")
+logger = logging.getLogger("all")
 
 
 @app.route("/uploads/<path:path>")
 def statistic_dir(path):
+    logger.info("Приложение запускается")
     return send_from_directory("uploads", path)
 
 
-logger.info("Приложение запускается")
-
-
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()

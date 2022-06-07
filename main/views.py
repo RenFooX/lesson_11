@@ -6,7 +6,6 @@ from loader.exeptions import PictureFormatNotSupported
 
 
 main_blueprint = Blueprint('main_blueprint', __name__, template_folder='templates')
-
 logger = logging.getLogger("basic")
 
 
@@ -30,9 +29,11 @@ def search_page():
 
 @main_blueprint.errorhandler(DataSourceBrokenEx)
 def data_source_broken_error(e):
-    return "Файл поврежден, обратитесь к администратору"
+    logger.error("Ошибка чтения .json файла")
+    return "Страница не доступна, обратитесь к администратору"
 
 
 @main_blueprint.errorhandler(PictureFormatNotSupported)
 def picture_format_not_supported(e):
+    logger.error("Ошибка формата загрузки изображения")
     return "Формат изображения не поддерживается, используйте другой формат"
