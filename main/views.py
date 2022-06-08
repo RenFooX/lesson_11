@@ -11,11 +11,13 @@ logger = logging.getLogger("basic")
 
 @main_blueprint.route('/')
 def main_page():
+    """ Создаем представление для главной страницы сайта """
     return render_template("main_html/main_page.html")
 
 
 @main_blueprint.route('/search/')
 def search_page():
+    """ Создаем представление для поиска контента по слову """
     path = current_app.config.get("POST_PATH")
     data_manager = DataManager(path)
     s = request.values.get("s", None)
@@ -29,11 +31,15 @@ def search_page():
 
 @main_blueprint.errorhandler(DataSourceBrokenEx)
 def data_source_broken_error(e):
+    """ Создаем функцию для обработки ошибки чтения .json файла
+         с последующей записью в logger"""
     logger.error("Ошибка чтения .json файла")
     return "Страница не доступна, обратитесь к администратору"
 
 
 @main_blueprint.errorhandler(PictureFormatNotSupported)
 def picture_format_not_supported(e):
+    """ Создаем функцию для обработки ошибки формата при загрузке изображения
+             с последующей записью в logger"""
     logger.error("Ошибка формата загрузки изображения")
     return "Формат изображения не поддерживается, используйте другой формат"

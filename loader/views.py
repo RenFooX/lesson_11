@@ -10,11 +10,13 @@ logger = logging.getLogger("basic")
 
 @loader_blueprint.route('/post', methods=['GET'])
 def page_by_upload_form():
+    """ Создается представления для отображения формы загрузки контента на сайт с методом GET """
     return render_template("loader_html/load_form.html")
 
 
 @loader_blueprint.route('/post', methods=['POST'])
 def page_by_created_new_post():
+    """ Создается представление для с методом POST """
 
     path = current_app.config.get("POST_PATH")
     data_manager = DataManager(path)
@@ -41,6 +43,8 @@ def page_by_created_new_post():
 
 @loader_blueprint.errorhandler(OutOfFreeNamesError)
 def error_for_save_to_names(e):
+    """ Создаем функцию для обработки ошибок лимит генерации имен для изображений
+     с последующей записью в logger"""
     logger.error("Достигнут лимит генерации имен изображений")
     return "Лимит для сохранения изображений исчерпан , обратитесь администратору сайта" \
            "или попробуйте позже"
@@ -48,6 +52,8 @@ def error_for_save_to_names(e):
 
 @loader_blueprint.errorhandler(PictureNotLoadedError)
 def picture_not_loaded_error(e):
+    """ Создаем функцию для обработки ошибок при загрузке изображения
+         с последующей записью в logger"""
     logger.error("Ошибка при загрузке изображения")
     return "Ошибка загрузки изображения," \
             "попробуйте еще раз или обратитесь к администратору"

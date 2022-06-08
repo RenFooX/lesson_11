@@ -2,6 +2,7 @@ import logging
 
 
 def create_logger():
+    """ Создаем функцию для logger  """
 
     logger = logging.getLogger('basic')
     logger.setLevel('DEBUG')
